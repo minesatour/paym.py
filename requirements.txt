@@ -1,6 +1,6 @@
 selenium
 webdriver-manager
-requests
 mitmproxy
+requests
 
 
