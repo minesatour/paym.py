@@ -1,23 +1,8 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-
-# Virtual environment
-venv/
-
-# Logs and databases
-*.log
-*.sqlite
-paypal_traffic.log
-
-# Environment variables
 .env
-
-# Selenium WebDriver binaries
-chromedriver*
-geckodriver*
-
-# Ignore proxy configurations
-proxy_config.json
+venv/
+.DS_Store
+selenium-screenshots/
+logs/
